@@ -48,6 +48,14 @@ SPOTIFY_CLIENT_SECRET = "your_client_secret"
 
 In the folder where you saved the file:
 
+**🍎 Mac**
+
+```bash
+python3 spotify_mcp_server.py --login
+```
+
+**🪟 Windows**
+
 ```bash
 python spotify_mcp_server.py --login
 ```
@@ -58,37 +66,75 @@ Browser opens → log in to Spotify → allow access. Done. (Token saved; you wo
 
 ### 5. Connect Claude or Cursor
 
-Use the **full path** to your downloaded file.
+Use the **full path** to your downloaded file. Restart the app after saving.
 
-**Claude Desktop** — `%APPDATA%\Claude\claude_desktop_config.json` (Windows) or `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac):
+> Run **either** Claude **or** Cursor with this server — not both at once.
 
-```json
-{
-  "mcpServers": {
-    "spotify": {
-      "command": "python",
-      "args": ["C:\\Tools\\spotify_mcp_server.py"]
-    }
-  }
-}
-```
+#### Claude Desktop
 
-**Cursor** — `%USERPROFILE%\.cursor\mcp.json` (Windows) or `~/.cursor/mcp.json` (Mac/Linux):
+| OS | Config file |
+|----|-------------|
+| 🍎 Mac | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| 🪟 Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+
+**🍎 Mac**
 
 ```json
 {
   "mcpServers": {
     "spotify": {
       "command": "python3",
-      "args": ["/Users/you/spotify_mcp_server.py"]
+      "args": ["/full/path/to/spotify_mcp_server.py"]
     }
   }
 }
 ```
 
-On Mac/Linux use `python3` in `command`. Restart the app after saving.
+**🪟 Windows**
 
-> Run **either** Claude **or** Cursor with this server — not both at once.
+```json
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python",
+      "args": ["C:\\full\\path\\to\\spotify_mcp_server.py"]
+    }
+  }
+}
+```
+
+#### Cursor
+
+| OS | Config file |
+|----|-------------|
+| 🍎 Mac | `~/.cursor/mcp.json` |
+| 🪟 Windows | `%USERPROFILE%\.cursor\mcp.json` |
+
+**🍎 Mac**
+
+```json
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python3",
+      "args": ["/full/path/to/spotify_mcp_server.py"]
+    }
+  }
+}
+```
+
+**🪟 Windows**
+
+```json
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python",
+      "args": ["C:\\full\\path\\to\\spotify_mcp_server.py"]
+    }
+  }
+}
+```
 
 ---
 
@@ -134,14 +180,16 @@ No terminal commands needed after setup.
 
 **Login again**
 
+**🍎 Mac**
+
 ```bash
-# Mac/Linux
 rm -f ~/.spotify_mcp_token
-python spotify_mcp_server.py --login
+python3 spotify_mcp_server.py --login
 ```
 
+**🪟 Windows**
+
 ```powershell
-# Windows
 Remove-Item "$env:USERPROFILE\.spotify_mcp_token" -ErrorAction SilentlyContinue
 python spotify_mcp_server.py --login
 ```
