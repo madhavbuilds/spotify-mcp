@@ -1,0 +1,21 @@
+[project]
+name = "spotify-mcp"
+version = "1.0.0"
+description = "MCP server to control Spotify from Claude Desktop or Cursor"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "spotipy>=2.23.0",
+]
+
+[project.scripts]
+spotify-mcp = "spotify_mcp.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["spotify_mcp*"]

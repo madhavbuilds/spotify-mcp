@@ -1,11 +1,29 @@
 # 🎵 Spotify MCP Server
 
-> One Python file. Control Spotify with natural language from Claude Desktop or Cursor.
+> Control Spotify with natural language from Claude Desktop or Cursor.
 
-![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-Compatible-orange?style=flat-square)
 ![Spotify](https://img.shields.io/badge/Spotify-Web%20API-1DB954?style=flat-square&logo=spotify&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+---
+
+## 📁 Project structure
+
+```
+spotify-mcp/
+├── spotify_mcp/           # Main package
+│   ├── __main__.py        # Entry point (python -m spotify_mcp)
+│   ├── config.py          # Credentials & settings (edit this)
+│   ├── auth.py            # Spotify OAuth
+│   ├── client.py          # Spotify API client
+│   └── server.py          # MCP tools
+├── spotify_mcp_server.py  # Legacy entry script (optional)
+├── requirements.txt
+├── pyproject.toml
+└── README.md
+```
 
 ---
 
@@ -35,7 +53,13 @@ Just talk to Claude naturally:
 ### 1. Install dependencies
 
 ```bash
-pip install mcp spotipy
+pip install -r requirements.txt
+```
+
+Or install as a package from the repo root:
+
+```bash
+pip install -e .
 ```
 
 ---
@@ -53,7 +77,7 @@ pip install mcp spotipy
 
 ### 3. Add your credentials
 
-Open `spotify_mcp_server.py` and fill in at the top:
+Open `spotify_mcp/config.py` and fill in at the top:
 
 ```python
 SPOTIFY_CLIENT_ID     = "your_client_id"
@@ -64,10 +88,10 @@ SPOTIFY_CLIENT_SECRET = "your_client_secret"
 
 ### 4. Authorize Spotify (one time only)
 
-Run the file once manually to complete the browser login:
+From the project root:
 
 ```bash
-python3 spotify_mcp_server.py
+python -m spotify_mcp --login
 ```
 
 A browser window will open → Log in → Allow access → Done. Token is saved automatically, you won't need to do this again.
@@ -75,6 +99,8 @@ A browser window will open → Log in → Allow access → Done. Token is saved 
 ---
 
 ### 5. Connect to your AI editor
+
+Use the **full path to this repo** as `cwd` so Python can find the package.
 
 #### 🖥️ Claude Desktop
 
@@ -85,7 +111,8 @@ A browser window will open → Log in → Allow access → Done. Token is saved 
   "mcpServers": {
     "spotify": {
       "command": "python3",
-      "args": ["/full/path/to/spotify_mcp_server.py"]
+      "args": ["-m", "spotify_mcp"],
+      "cwd": "/full/path/to/spotify-mcp"
     }
   }
 }
@@ -98,7 +125,8 @@ A browser window will open → Log in → Allow access → Done. Token is saved 
   "mcpServers": {
     "spotify": {
       "command": "python",
-      "args": ["C:\\full\\path\\to\\spotify_mcp_server.py"]
+      "args": ["-m", "spotify_mcp"],
+      "cwd": "C:\\full\\path\\to\\spotify-mcp"
     }
   }
 }
@@ -111,13 +139,14 @@ A browser window will open → Log in → Allow access → Done. Token is saved 
   "mcpServers": {
     "spotify": {
       "command": "python3",
-      "args": ["/full/path/to/spotify_mcp_server.py"]
+      "args": ["-m", "spotify_mcp"],
+      "cwd": "/full/path/to/spotify-mcp"
     }
   }
 }
 ```
 
-> 💡 **Tip:** To find the exact path on Mac, drag the file into Terminal — the path will appear automatically.
+> 💡 **Tip:** To find the exact path on Mac, drag the folder into Terminal — the path will appear automatically.
 
 Restart Claude Desktop after saving.
 
@@ -132,7 +161,8 @@ Restart Claude Desktop after saving.
   "mcpServers": {
     "spotify": {
       "command": "python3",
-      "args": ["/full/path/to/spotify_mcp_server.py"]
+      "args": ["-m", "spotify_mcp"],
+      "cwd": "/full/path/to/spotify-mcp"
     }
   }
 }
@@ -145,7 +175,8 @@ Restart Claude Desktop after saving.
   "mcpServers": {
     "spotify": {
       "command": "python",
-      "args": ["C:\\full\\path\\to\\spotify_mcp_server.py"]
+      "args": ["-m", "spotify_mcp"],
+      "cwd": "C:\\full\\path\\to\\spotify-mcp"
     }
   }
 }
@@ -154,6 +185,8 @@ Restart Claude Desktop after saving.
 Or in Cursor: go to **Settings → MCP → Add Server** and paste the config.
 
 > ⚠️ Run only one instance at a time — either Claude Desktop or Cursor, not both.
+
+**Alternative:** you can still point `args` at `spotify_mcp_server.py` in this folder instead of `-m spotify_mcp`.
 
 ---
 
@@ -184,20 +217,28 @@ Or in Cursor: go to **Settings → MCP → Add Server** and paste the config.
 → Open Spotify on your phone or computer first and play any song, then try again.
 
 **Spotify not showing in Claude / Cursor**
-→ Make sure the path in config is the full absolute path. Restart after any changes.
+→ Make sure `cwd` is the repo root and dependencies are installed. Restart after any changes.
 
 **Browser opens and closes instantly**
-→ Delete the cached token and run the file manually again:
+→ Delete the cached token and run login again:
+
 ```bash
 rm -f ~/.spotify_mcp_token
-python3 spotify_mcp_server.py
+python -m spotify_mcp --login
+```
+
+On Windows (PowerShell):
+
+```powershell
+Remove-Item "$env:USERPROFILE\.spotify_mcp_token" -ErrorAction SilentlyContinue
+python -m spotify_mcp --login
 ```
 
 ---
 
 ## 📋 Requirements
 
-- Python 3.8+
+- Python 3.10+
 - Claude Desktop or Cursor
 - Spotify account (Free or Premium)
 - Spotify Developer account (free)
