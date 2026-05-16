@@ -1,6 +1,6 @@
 # 🎵 Spotify MCP Server
 
-> One Python file. Control Spotify with natural language from Claude Desktop.
+> One Python file. Control Spotify with natural language from Claude Desktop or Cursor.
 
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-Compatible-orange?style=flat-square)
@@ -13,7 +13,7 @@
 
 > 🎬 **[Watch Demo Video](#)** — Claude controlling Spotify in real time
 
-<!-- Replace # with your actual LinkedIn/YouTube video link -->
+<!-- Replace # with your actual YouTube/LinkedIn video link -->
 
 ---
 
@@ -74,10 +74,11 @@ A browser window will open → Log in → Allow access → Done. Token is saved 
 
 ---
 
-### 5. Configure Claude Desktop
+### 5. Connect to your AI editor
 
-#### 🍎 macOS
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
+#### 🖥️ Claude Desktop
+
+**🍎 macOS** — Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -90,8 +91,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-#### 🪟 Windows
-Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+**🪟 Windows** — Edit `%APPDATA%\Claude\claude_desktop_config.json`:
 
 ```json
 {
@@ -104,8 +104,7 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
 }
 ```
 
-#### 🐧 Linux
-Edit `~/.config/Claude/claude_desktop_config.json`:
+**🐧 Linux** — Edit `~/.config/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -121,6 +120,40 @@ Edit `~/.config/Claude/claude_desktop_config.json`:
 > 💡 **Tip:** To find the exact path on Mac, drag the file into Terminal — the path will appear automatically.
 
 Restart Claude Desktop after saving.
+
+---
+
+#### 🖱️ Cursor
+
+**🍎 macOS / 🐧 Linux** — Add to `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python3",
+      "args": ["/full/path/to/spotify_mcp_server.py"]
+    }
+  }
+}
+```
+
+**🪟 Windows** — Add to `%USERPROFILE%\.cursor\mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "spotify": {
+      "command": "python",
+      "args": ["C:\\full\\path\\to\\spotify_mcp_server.py"]
+    }
+  }
+}
+```
+
+Or in Cursor: go to **Settings → MCP → Add Server** and paste the config.
+
+> ⚠️ Run only one instance at a time — either Claude Desktop or Cursor, not both.
 
 ---
 
@@ -150,8 +183,8 @@ Restart Claude Desktop after saving.
 **`NO_ACTIVE_DEVICE` error**
 → Open Spotify on your phone or computer first and play any song, then try again.
 
-**Spotify not showing in Claude**
-→ Make sure the path in config is the full absolute path. Restart Claude Desktop after any changes.
+**Spotify not showing in Claude / Cursor**
+→ Make sure the path in config is the full absolute path. Restart after any changes.
 
 **Browser opens and closes instantly**
 → Delete the cached token and run the file manually again:
@@ -165,7 +198,7 @@ python3 spotify_mcp_server.py
 ## 📋 Requirements
 
 - Python 3.8+
-- Claude Desktop
+- Claude Desktop or Cursor
 - Spotify account (Free or Premium)
 - Spotify Developer account (free)
 
@@ -175,4 +208,4 @@ python3 spotify_mcp_server.py
 
 ## 📄 License
 
-MIT — do whatever you want with it!# spotify-mcp
+MIT — do whatever you want with it!
