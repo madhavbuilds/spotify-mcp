@@ -298,7 +298,7 @@ For bugs or ideas, [open an issue](https://github.com/madhavbuilds/spotify-mcp/i
 
 This is a **third-party integration** and is **not** made by, affiliated with, or endorsed by **Spotify**, **Anthropic** (Claude), or **Cursor**.
 
-Made by **Madhav Panchal** ([@madhavbuilds](https://github.com/madhavbuilds) · [@maddytechspace](https://x.com/maddytechspace) on X).
+Made by **[Madhav Panchal](https://x.com/maddytechspace)**.
 
 Use at your own discretion. You are responsible for complying with Spotify's [Terms of Use](https://www.spotify.com/legal/end-user-agreement/) and [Developer Policy](https://developer.spotify.com/policy).
 
