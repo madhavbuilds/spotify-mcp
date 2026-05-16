@@ -1,6 +1,6 @@
 # 🎵 Spotify MCP Server
 
-> Control Spotify with natural language from Claude Desktop or Cursor.
+> **One file.** Download, add your keys, connect Claude or Cursor — no clone needed.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-Compatible-orange?style=flat-square)
@@ -9,75 +9,33 @@
 
 ---
 
-## 📁 Project structure
+## ⚡ Quick start (3 minutes)
 
-```
-spotify-mcp/
-├── spotify_mcp/           # Main package
-│   ├── __main__.py        # Entry point (python -m spotify_mcp)
-│   ├── config.py          # Credentials & settings (edit this)
-│   ├── auth.py            # Spotify OAuth
-│   ├── client.py          # Spotify API client
-│   └── server.py          # MCP tools
-├── spotify_mcp_server.py  # Legacy entry script (optional)
-├── requirements.txt
-├── pyproject.toml
-└── README.md
-```
+### 1. Download one file
+
+Get **`spotify_mcp_server.py`** — pick any option:
+
+- [Download from GitHub](https://github.com/madhavbuilds/spotify-mcp/raw/main/spotify_mcp_server.py) (right‑click → Save as)
+- Or copy it to a folder like `C:\Tools\` or `~/spotify-mcp/`
+
+You only need this **one file**. No git clone.
 
 ---
 
-## 📺 Demo
-
-> 🎬 **[Watch Demo Video](#)** — Claude controlling Spotify in real time
-
-<!-- Replace # with your actual YouTube/LinkedIn video link -->
-
----
-
-## ✨ What You Can Do
-
-Just talk to Claude naturally:
-
-- *"What am I listening to right now?"*
-- *"Play something for a late night coding session"*
-- *"Add 3 songs by The Weeknd to the queue"*
-- *"Lower the volume to 30"*
-- *"What's my most played song?"*
-- *"Play some Coldplay"*
-
----
-
-## 🚀 Setup
-
-### 1. Install dependencies
+### 2. Install Python packages
 
 ```bash
-pip install -r requirements.txt
-```
-
-Or install as a package from the repo root:
-
-```bash
-pip install -e .
+pip install mcp spotipy
 ```
 
 ---
 
-### 2. Get Spotify API credentials
+### 3. Spotify API keys
 
-1. Go to [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard)
-2. Click **Create App**
-3. Fill in any name and description
-4. Add redirect URI: `http://127.0.0.1:8888/callback`
-5. Select **Web API** and save
-6. Go to **Settings** → copy your **Client ID** and **Client Secret**
-
----
-
-### 3. Add your credentials
-
-Open `spotify_mcp/config.py` and fill in at the top:
+1. [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard) → **Create App**
+2. Redirect URI: `http://127.0.0.1:8888/callback`
+3. Copy **Client ID** and **Client Secret**
+4. Open `spotify_mcp_server.py` in any editor and paste them at the top:
 
 ```python
 SPOTIFY_CLIENT_ID     = "your_client_id"
@@ -86,107 +44,65 @@ SPOTIFY_CLIENT_SECRET = "your_client_secret"
 
 ---
 
-### 4. Authorize Spotify (one time only)
+### 4. Log in once
 
-From the project root:
+In the folder where you saved the file:
 
 ```bash
-python -m spotify_mcp --login
+python spotify_mcp_server.py --login
 ```
 
-A browser window will open → Log in → Allow access → Done. Token is saved automatically, you won't need to do this again.
+Browser opens → log in to Spotify → allow access. Done. (Token saved; you won’t repeat this.)
 
 ---
 
-### 5. Connect to your AI editor
+### 5. Connect Claude or Cursor
 
-Use the **full path to this repo** as `cwd` so Python can find the package.
+Use the **full path** to your downloaded file.
 
-#### 🖥️ Claude Desktop
-
-**🍎 macOS** — Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "spotify": {
-      "command": "python3",
-      "args": ["-m", "spotify_mcp"],
-      "cwd": "/full/path/to/spotify-mcp"
-    }
-  }
-}
-```
-
-**🪟 Windows** — Edit `%APPDATA%\Claude\claude_desktop_config.json`:
+**Claude Desktop** — `%APPDATA%\Claude\claude_desktop_config.json` (Windows) or `~/Library/Application Support/Claude/claude_desktop_config.json` (Mac):
 
 ```json
 {
   "mcpServers": {
     "spotify": {
       "command": "python",
-      "args": ["-m", "spotify_mcp"],
-      "cwd": "C:\\full\\path\\to\\spotify-mcp"
+      "args": ["C:\\Tools\\spotify_mcp_server.py"]
     }
   }
 }
 ```
 
-**🐧 Linux** — Edit `~/.config/Claude/claude_desktop_config.json`:
+**Cursor** — `%USERPROFILE%\.cursor\mcp.json` (Windows) or `~/.cursor/mcp.json` (Mac/Linux):
 
 ```json
 {
   "mcpServers": {
     "spotify": {
       "command": "python3",
-      "args": ["-m", "spotify_mcp"],
-      "cwd": "/full/path/to/spotify-mcp"
+      "args": ["/Users/you/spotify_mcp_server.py"]
     }
   }
 }
 ```
 
-> 💡 **Tip:** To find the exact path on Mac, drag the folder into Terminal — the path will appear automatically.
+On Mac/Linux use `python3` in `command`. Restart the app after saving.
 
-Restart Claude Desktop after saving.
+> Run **either** Claude **or** Cursor with this server — not both at once.
 
 ---
 
-#### 🖱️ Cursor
+## 🎯 Daily use
 
-**🍎 macOS / 🐧 Linux** — Add to `~/.cursor/mcp.json`:
+1. Open Spotify on your phone or computer (play something once if needed).
+2. Open Claude or Cursor.
+3. Chat naturally:
+   - *"What's playing?"*
+   - *"Play Blinding Lights"*
+   - *"Pause"*
+   - *"Add Drake to the queue"*
 
-```json
-{
-  "mcpServers": {
-    "spotify": {
-      "command": "python3",
-      "args": ["-m", "spotify_mcp"],
-      "cwd": "/full/path/to/spotify-mcp"
-    }
-  }
-}
-```
-
-**🪟 Windows** — Add to `%USERPROFILE%\.cursor\mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "spotify": {
-      "command": "python",
-      "args": ["-m", "spotify_mcp"],
-      "cwd": "C:\\full\\path\\to\\spotify-mcp"
-    }
-  }
-}
-```
-
-Or in Cursor: go to **Settings → MCP → Add Server** and paste the config.
-
-> ⚠️ Run only one instance at a time — either Claude Desktop or Cursor, not both.
-
-**Alternative:** you can still point `args` at `spotify_mcp_server.py` in this folder instead of `-m spotify_mcp`.
+No terminal commands needed after setup.
 
 ---
 
@@ -198,40 +114,36 @@ Or in Cursor: go to **Settings → MCP → Add Server** and paste the config.
 | `play` / `pause` | Playback control |
 | `skip_next` / `skip_previous` | Skip tracks |
 | `set_volume` | Set volume 0–100 |
-| `search_and_play` | Search and instantly play any track |
+| `search_and_play` | Search and play a track |
 | `add_to_queue` | Add a track to the queue |
-| `get_queue` | See what's coming up next |
+| `get_queue` | See what's up next |
 | `my_top_tracks` | Your most played songs |
-| `recently_played` | Your listening history |
-| `my_playlists` | List all your playlists |
+| `recently_played` | Listening history |
+| `my_playlists` | List playlists |
 | `play_playlist` | Play a playlist by name |
 
 ---
 
 ## ❗ Troubleshooting
 
-**`invalid_client` error**
-→ Double check your Client ID and Secret — make sure nothing was copied twice or has extra spaces.
+**`invalid_client`** — Check Client ID/Secret; no extra spaces.
 
-**`NO_ACTIVE_DEVICE` error**
-→ Open Spotify on your phone or computer first and play any song, then try again.
+**`NO_ACTIVE_DEVICE`** — Open Spotify and start playback on one device, then retry.
 
-**Spotify not showing in Claude / Cursor**
-→ Make sure `cwd` is the repo root and dependencies are installed. Restart after any changes.
+**MCP not showing** — Use the **full absolute path** in `args`. Restart Claude/Cursor.
 
-**Browser opens and closes instantly**
-→ Delete the cached token and run login again:
+**Login again**
 
 ```bash
+# Mac/Linux
 rm -f ~/.spotify_mcp_token
-python -m spotify_mcp --login
+python spotify_mcp_server.py --login
 ```
 
-On Windows (PowerShell):
-
 ```powershell
+# Windows
 Remove-Item "$env:USERPROFILE\.spotify_mcp_token" -ErrorAction SilentlyContinue
-python -m spotify_mcp --login
+python spotify_mcp_server.py --login
 ```
 
 ---
@@ -239,14 +151,14 @@ python -m spotify_mcp --login
 ## 📋 Requirements
 
 - Python 3.10+
+- `pip install mcp spotipy`
+- Spotify account + free [Developer](https://developer.spotify.com/dashboard) app
 - Claude Desktop or Cursor
-- Spotify account (Free or Premium)
-- Spotify Developer account (free)
 
-> ⚠️ **Note:** Playback control (play, pause, skip, volume) requires **Spotify Premium**. Search and stats work with free accounts.
+Playback control (play/pause/skip/volume) needs **Spotify Premium**. Search and stats work on free accounts.
 
 ---
 
 ## 📄 License
 
-MIT — do whatever you want with it!
+MIT
